@@ -1,0 +1,8 @@
+
+.wiki-origin { margin: .4rem 0; }
+.origin-chip { background: #e3f0ec; color: #1f7a6d; font-size: .85rem; }
+.wiki-chain { font-size: .85rem; opacity: .8; }
+.term-row { margin: .5rem 0; line-height: 1.9; }
+.term-list a { text-decoration: none; border-bottom: 1px dotted #1f7a6d; }
+.desc-list { list-style: none; padding: 0; margin: .3rem 0; display: flex; flex-wrap: wrap; gap: .4rem .9rem; }
+.desc-list li { background: #f3f6f5; padding: .15rem .6rem; border-radius: 999px; font-size: .88rem; }

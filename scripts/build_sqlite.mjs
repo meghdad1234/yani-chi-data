@@ -22,12 +22,14 @@ db.exec(`
     word TEXT NOT NULL,
     norm TEXT NOT NULL,
     pos TEXT, roman TEXT, ipa TEXT, etymology TEXT,
-    senses TEXT NOT NULL
+    senses TEXT NOT NULL,
+    origin TEXT,
+    extra TEXT
   );
   CREATE TABLE meta (k TEXT PRIMARY KEY, v TEXT);
 `);
 const ins = db.prepare(
-  'INSERT INTO entries (lang, word, norm, pos, roman, ipa, etymology, senses) VALUES (?,?,?,?,?,?,?,?)');
+  'INSERT INTO entries (lang, word, norm, pos, roman, ipa, etymology, senses, origin, extra) VALUES (?,?,?,?,?,?,?,?,?,?)');
 
 let n = 0;
 db.exec('BEGIN');
@@ -36,12 +38,15 @@ for (const f of files) {
   for (const line of text.split('\n')) {
     if (!line) continue;
     const e = JSON.parse(line);
-    ins.run('fa', e.w, normFa(e.w), e.pos, e.roman, e.ipa, e.et, JSON.stringify(e.s));
+    const x = e.x || null;
+    ins.run('fa', e.w, normFa(e.w), e.pos, e.roman, e.ipa, e.et, JSON.stringify(e.s),
+      x && x.org ? x.org.l : null, x ? JSON.stringify(x) : null);
     n++;
   }
 }
 db.exec('COMMIT');
 db.exec('CREATE INDEX idx_entries_lang_norm ON entries (lang, norm)');
+db.exec('CREATE INDEX idx_entries_origin ON entries (lang, origin)');
 db.prepare('INSERT INTO meta VALUES (?,?)').run('entries', String(n));
 db.prepare('INSERT INTO meta VALUES (?,?)').run('built_at', new Date().toISOString());
 db.close();
