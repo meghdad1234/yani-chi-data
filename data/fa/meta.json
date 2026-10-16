@@ -1,5 +1,16 @@
 {
   "source": "https://kaikki.org/dictionary/Persian/kaikki.org-dictionary-Persian.jsonl",
   "entries": 20274,
-  "shards": 5
+  "shards": 5,
+  "stats": {
+    "syn": 3865,
+    "ant": 306,
+    "rel": 1702,
+    "der": 1412,
+    "hyper": 10,
+    "hypo": 6,
+    "forms": 10559,
+    "org": 6027,
+    "desc": 3443
+  }
 }
